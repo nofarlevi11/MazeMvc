@@ -1,5 +1,7 @@
 package view;
 
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
@@ -8,21 +10,32 @@ import controller.Controller;
 
 public class MyView implements View {
 
+	private BufferedReader in;
+	private PrintWriter out;
+	private CLI cli;
+
 	Controller controller;
 	
 	public MyView(Controller controller) {
 		this.controller = controller;
 	}
 	
-	public MyView(){};
+	public MyView(BufferedReader in, PrintWriter out){
+		this.in = in;
+		this.out=out;
+		this.controller = controller;
+		
+		cli = new CLI (in, out);
+	};
 	
-	void setController (Controller controller) {
+	public void setController (Controller controller) {
 		this.controller = controller;
 	}
 	
 	@Override
 	public void notifyMazeIsReady(String name) {
-		// TODO Auto-generated method stub
+		out.println("maze " + name + " is ready");
+		out.flush();
 	}
 
 	@Override
@@ -32,11 +45,17 @@ public class MyView implements View {
 
 	@Override
 	public void setCommands(HashMap<String, Command> commands) {
-		// TODO Auto-generated method stub
+		cli.setCommand(commands);
 	}
 
 	@Override
 	public void printAnswers(String[] args) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void start() {
 		// TODO Auto-generated method stub
 		
 	}
