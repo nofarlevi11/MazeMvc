@@ -1,24 +1,19 @@
 package controller;
 
+import java.util.HashMap;
+
 import model.Model;
 import view.View;
 
-public class MyController implements Controller {
+public class MyController extends CommonController {
 
-	private View view;
-	private Model model;
-	private CommandManager commandManager;
 	
 	public MyController(View view, Model model) {
-		this.view = view;
-		this.model = model;
+		super(view, model);
 	}
 
-	
 	@Override
 	public void notifyMazeIsReady(String name) {
 		view.notifyMazeIsReady(name);
-
 	}
-
 }
