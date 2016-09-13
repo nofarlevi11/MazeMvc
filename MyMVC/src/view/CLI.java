@@ -13,22 +13,23 @@ public class CLI {
 
 	private BufferedReader in;
 	private PrintWriter out;
+
 	
-	//רועי
 	private HashMap<String, Command> commands;
-	
+
 	private List<Thread> threads = new ArrayList<Thread>();
-	
+
 	public CLI(BufferedReader in, PrintWriter out) {
 		this.in = in;
-		this.out=out;
+		this.out = out;
 	}
-	
-	public void setCommand (HashMap<String,Command> commands) {
+
+	public void setCommand(HashMap<String, Command> commands) {
 		this.commands = commands;
 	}
-	private void printMenu(){
-		out.println ("Please choose command: (");
+
+	private void printMenu() {
+		out.println("Please choose command: (");
 		for (String command : commands.keySet()) {
 			out.println(command + ",");
 		}
@@ -36,54 +37,50 @@ public class CLI {
 		out.flush();
 	}
 
-	public void start () {
-		Thread thread = new Thread (new Runnable() {
-				
+	public void start() {
+		Thread thread = new Thread(new Runnable() {
+
 			@Override
 			public void run() {
+				while (true) {
 					printMenu();
 					try {
 						String commandLine = in.readLine();
-						String arr[] = commandLine.split (" ");
-						String command = arr[0];
+						String comArray[] = commandLine.split(" ");
+						String command = comArray[0];
 						
-						if (!commands.containsKey(command)) {
-							out.println ("command doesn't exist");
-						}
-						else {
+						
+						if (!commands.containsKey(command) && !command.equals("exit")) {
+							out.println("command doesn't exist");
+							out.println("");
+						} else {
+							if (command.equals("exit")) {
+								break;
+							}
 							String[] args = null;
-							if (arr.length >1) {
-								String commandArgs = commendLine.substring(commandLine.indexOf(" ") + 1);
+							if (comArray.length > 1) {
+								String commandArgs = commandLine.substring(commandLine.indexOf(" ") + 1);
 								args = commandArgs.split(" ");
 							}
 							Command cmd = commands.get(command);
 							cmd.doCommand(args);
 							
-							if (command.equals("exit")) {
-								break;
-							}
 						}
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
-					String exit = "exit";
-					try {
-						int inputString = in.read();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 				}
-			});
-		}
-	
-	void printAnswers (String[] args){
-		for (String line : args) {
-			// prints filename and directory name
-			out.println(line);
-			out.flush();
-		}
+				
+			}
+		});
+		thread.start();
 	}
+
+//	void printAnswers(String[] args) {
+//		for (String line : args) {
+//			// prints filename and directory name
+//			out.println(line);
+//			out.flush();
+//		}
+//	}
 }

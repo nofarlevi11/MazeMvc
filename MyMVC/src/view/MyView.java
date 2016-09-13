@@ -8,25 +8,11 @@ import algorithms.mazeGenerators.Maze3d;
 import controller.Command;
 import controller.Controller;
 
-public class MyView implements View {
+public class MyView extends CommonView {
 
-	private BufferedReader in;
-	private PrintWriter out;
-	private CLI cli;
-
-	Controller controller;
-	
-	public MyView(Controller controller) {
-		this.controller = controller;
+	public MyView(BufferedReader in, PrintWriter out) {
+		super(in, out);
 	}
-	
-	public MyView(BufferedReader in, PrintWriter out){
-		this.in = in;
-		this.out=out;
-		this.controller = controller;
-		
-		cli = new CLI (in, out);
-	};
 	
 	public void setController (Controller controller) {
 		this.controller = controller;
@@ -34,13 +20,14 @@ public class MyView implements View {
 	
 	@Override
 	public void notifyMazeIsReady(String name) {
-		out.println("maze " + name + " is ready");
+		out.println("The Maze " + name + " is ready");
 		out.flush();
 	}
 
 	@Override
 	public void displayMaze(Maze3d maze) {
-		// TODO Auto-generated method stub
+		out.println(maze);
+		out.flush();
 	}
 
 	@Override
@@ -51,12 +38,11 @@ public class MyView implements View {
 	@Override
 	public void printAnswers(String[] args) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
+		cli.start();
 		
 	}
 

@@ -17,8 +17,5 @@ public abstract class CommonController implements Controller {
 		view.setCommands(commandManager.getCommandsMap());
 	}
 	@Override
-	public void notifyMazeIsReady(String name) {
-		// TODO Auto-generated method stub
-
-	}
+	public abstract void notifyMazeIsReady(String name);
 }

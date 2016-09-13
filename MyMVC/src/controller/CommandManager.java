@@ -20,7 +20,7 @@ public class CommandManager {
 		HashMap<String, Command> commands = new HashMap<String, Command>();
 		commands.put("generate_maze", new GenerateMazeCommand());
 		commands.put("display", new DisplayMazeCommand());
-		commands.put("dir", new Dir());
+		//commands.put("dir", new Dir());
 		
 		return commands;
 	}

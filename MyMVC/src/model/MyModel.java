@@ -1,21 +1,30 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
-
 import algorithms.mazeGenerators.GrowingTreeGenerator;
 import algorithms.mazeGenerators.Maze3d;
 import controller.Controller;
 
-public class MyModel implements Model {
+
+public class MyModel extends CommonModel {
 
 	
-	//List של ת'רדים
+	private List<GenerateMazeRunnable> generateMazeTasks = new ArrayList<GenerateMazeRunnable>();
+	
+	
+	public MyModel() {
+		super();
+	}
+	
 	class GenerateMazeRunnable implements Runnable {
 
 		private int floors, rows, cols;
 		private String name;
+		private GrowingTreeGenerator generator;
 		
 		public GenerateMazeRunnable(String name, int floors, int rows, int cols) {
 			this.name = name;
@@ -24,16 +33,17 @@ public class MyModel implements Model {
 			this.cols = cols; 
 		}
 	
+		@Override
 		public void run() {
 			GrowingTreeGenerator generator  = new GrowingTreeGenerator();
-			Maze3d maze = generator.generate (floors, rows, cols);
+			Maze3d maze = generator.generate(floors, rows, cols);
 			mazes.put(name, maze);
 			
 			controller.notifyMazeIsReady(name);
 		}
 		
 		public void terminate () {
-			
+			generator.setIsDone(true);
 		}
 	}
 
@@ -41,24 +51,25 @@ public class MyModel implements Model {
 		this.controller = controller;
 	}
 	
-	
-	private Controller controller;
-	private Map<String, Maze3d> mazes = new ConcurrentHashMap<String, Maze3d>(); //hash map for the mazes
-	private ExecutorService threadPool;
 
 	@Override
 	public void generateMaze(String name, int floors, int rows, int cols) {
 		GenerateMazeRunnable generateMazeRunnable = new GenerateMazeRunnable(name, floors, rows, cols);
+		generateMazeTasks.add(generateMazeRunnable);
 		Thread thread = new Thread(generateMazeRunnable);
 		thread.start();
 		threadPool.submit(thread);
 	}
-
+	
+	
 	@Override
 	public Maze3d getMaze(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		return mazes.get(name);
 	}
 	
-	//פונקציה EXIT!
+	public void exit() {
+		for (GenerateMazeRunnable task : generateMazeTasks) {
+			task.terminate();
+		}
+	}
 }
