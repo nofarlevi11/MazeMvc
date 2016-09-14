@@ -29,11 +29,11 @@ public class CLI {
 	}
 
 	private void printMenu() {
-		out.println("Please choose command: (");
+		out.println("Please choose the command - what do you want to do?: ");
 		for (String command : commands.keySet()) {
 			out.println(command + ",");
 		}
-		out.println(")");
+		out.println("");
 		out.flush();
 	}
 
@@ -76,11 +76,5 @@ public class CLI {
 		thread.start();
 	}
 
-//	void printAnswers(String[] args) {
-//		for (String line : args) {
-//			// prints filename and directory name
-//			out.println(line);
-//			out.flush();
-//		}
-//	}
+
 }
