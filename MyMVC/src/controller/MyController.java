@@ -1,7 +1,5 @@
 package controller;
 
-import java.util.HashMap;
-
 import model.Model;
 import view.View;
 

@@ -7,22 +7,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 import algorithm.demo.MazeAdapter;
 import algorithms.mazeGenerators.GrowingTreeGenerator;
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
 import algorithms.search.Seracher;
 import algorithms.search.Solution;
-import controller.Controller;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
 
 
 public class MyModel extends CommonModel {
 
-	private List<GenerateMazeRunnable> generateMazeTasks = new ArrayList<GenerateMazeRunnable>();
-	private List <MazeSolverRunnable> solverTasks = new ArrayList<MazeSolverRunnable>();
 	
 	public MyModel() {
 		super();
@@ -58,9 +54,9 @@ public class MyModel extends CommonModel {
 	class MazeSolverRunnable implements Runnable {
 		
 		private String name;
-		private Seracher algorithm;
+		private Seracher<Position> algorithm;
 		
-		public MazeSolverRunnable(String name,Seracher algo) {
+		public MazeSolverRunnable(String name,Seracher<Position> algo) {
 			this.name = name;
 			this.algorithm = algo;
 		}
@@ -68,16 +64,15 @@ public class MyModel extends CommonModel {
 		@Override
 		public void run() {
 			MazeAdapter myMazeAdap = new MazeAdapter(getMaze(name));
-			Solution sol = algorithm.search(myMazeAdap);
+			Solution<Position> sol = algorithm.search(myMazeAdap);
 			solutions.put(name, sol);
 			
 			controller.notifyMazeWasSolved(name);
 		}
 		
-	}
-	
-	public void setController(Controller controller) {
-		this.controller = controller;
+		public void terminate() {
+			algorithm.setIsDone(true);
+		}
 	}
 
 	@Override
@@ -87,11 +82,6 @@ public class MyModel extends CommonModel {
 		Thread thread = new Thread(generateMazeRunnable);
 		thread.start();
 		threadPool.submit(thread);
-	}
-
-	@Override
-	public Maze3d getMaze(String name) {
-		return mazes.get(name);
 	}
 
 	public void exit() {
@@ -110,7 +100,7 @@ public class MyModel extends CommonModel {
 	}
 
 	@Override
-	public void solveMaze(String name, Seracher algorithm) {
+	public void solveMaze(String name, Seracher<Position> algorithm) {
 		MazeSolverRunnable solverRunnable = new MazeSolverRunnable(name, algorithm);
 		solverTasks.add(solverRunnable);
 		Thread thread = new Thread(solverRunnable);
@@ -118,7 +108,7 @@ public class MyModel extends CommonModel {
 		threadPool.submit(thread);
 	}
 	
-	public Solution getSolution (String name) {
+	public Solution<Position> getSolution (String name) {
 		return solutions.get(name);
 	}
 

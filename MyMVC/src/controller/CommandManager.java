@@ -1,20 +1,14 @@
 package controller;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+
 import java.util.HashMap;
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
 import algorithms.search.BFS;
 import algorithms.search.DFS;
 import algorithms.search.Seracher;
 import algorithms.search.Solution;
-import io.MyCompressorOutputStream;
-import io.MyDecompressorInputStream;
 import model.Model;
 import view.View;
 
@@ -88,11 +82,12 @@ public class CommandManager {
 	public class DisplayCrossSectionCommand implements Command {
 		@Override
 		public void doCommand(String[] args) {
-			String index = args[0];
-			String cross = args[1].toLowerCase();
-			String name = args[2];
+
+			String name = args[0];
+			String cross = args[1].toLowerCase(); // the dimension
+			String index = args[2];
 			Maze3d maze = model.getMaze(name);
-			switch (cross) {
+			switch (cross) { // checking what dimension the cross will be
 			case "z":
 				view.printCrossSection(maze.getCrossSectionByZ(Integer.parseInt(index)));
 				break;
@@ -135,13 +130,15 @@ public class CommandManager {
 		public void doCommand(String[] s) {
 			String name = s[0];
 			String algo = s[1];
-			Seracher algorithm = null;
+			Seracher<Position> algorithm = null;
 			switch (algo) {
 			case "BFS":
-				algorithm = new BFS();
+				algorithm = new BFS<Position>();
 				break;
 			case "DFS":
-				algorithm = new DFS();
+				algorithm = new DFS<Position>();
+				break;
+			default:
 				break;
 			}
 			model.solveMaze(name, algorithm);
@@ -153,9 +150,19 @@ public class CommandManager {
 		@Override
 		public void doCommand(String[] s) {
 			String name = s[0];
-			Solution sol = model.getSolution(name);
-			view.displaySolution(sol);
+			Solution<Position> sol = model.getSolution(name); // bring the
+																// solution of
+																// the maze
+																// (according to
+																// the name)
+																// from the
+																// model, to
+																// sent to the
+																// view
+			view.displaySolution(sol); // send the solution to the view, so it
+										// could be displayed for the end-user
 		}
 
 	}
+
 }

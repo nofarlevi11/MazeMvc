@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 
 import algorithms.mazeGenerators.Maze3d;
+import algorithms.mazeGenerators.Position;
 import algorithms.search.Solution;
 import controller.Command;
 import controller.Controller;
@@ -68,7 +69,7 @@ public class MyView extends CommonView {
 		out.flush();
 
 	}
-	public void displaySolution(Solution sol) {
+	public void displaySolution(Solution<Position> sol) {
 		out.println ("");
 		out.println ("**************");
 		out.println("The Solution for the maze is: ");

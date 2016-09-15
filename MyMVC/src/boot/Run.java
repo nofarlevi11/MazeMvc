@@ -29,12 +29,6 @@ public class Run {
 		view.setController(controller);
 		model.setController(controller);
 		
-//		CommandManager a = new CommandManager(new MyModel(), new MyView(null));
-//		Command dir = a.getCommandsMap().get("dir");
-//		String[] str= new String[1];
-//		str[0]="c:\\";
-//		
-//		dir.doCommand(str);
 		
 		view.start();
 		
