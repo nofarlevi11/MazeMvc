@@ -12,6 +12,8 @@ public interface Model {
 	void exit();
 	void setController(Controller controller);
 	void setMaze (String name, Maze3d maze);
+	void saveMaze (String name, String file);
+	void loadMaze (String path, String name);
 	void solveMaze (String name, Seracher algorithm);
 	public Solution getSolution (String name);
 }

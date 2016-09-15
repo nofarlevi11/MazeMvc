@@ -1,14 +1,23 @@
 package model;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
-
 import algorithm.demo.MazeAdapter;
 import algorithms.mazeGenerators.GrowingTreeGenerator;
 import algorithms.mazeGenerators.Maze3d;
 import algorithms.search.Seracher;
 import algorithms.search.Solution;
 import controller.Controller;
+import io.MyCompressorOutputStream;
+import io.MyDecompressorInputStream;
+
 
 public class MyModel extends CommonModel {
 
@@ -89,6 +98,9 @@ public class MyModel extends CommonModel {
 		for (GenerateMazeRunnable task : generateMazeTasks) {
 			task.terminate();
 		}
+		for (MazeSolverRunnable task : solverTasks) {
+			task.terminate();
+		}
 	}
 
 	@Override
@@ -108,5 +120,66 @@ public class MyModel extends CommonModel {
 	
 	public Solution getSolution (String name) {
 		return solutions.get(name);
+	}
+
+	@Override
+	public void saveMaze(String name, String path) {
+		Maze3d maze = getMaze(name);
+		OutputStream out = null;
+		try {
+			out = new MyCompressorOutputStream(new FileOutputStream(path));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		try {
+			out.write(maze.toByteArray());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	@Override
+	public void loadMaze(String path, String name) {
+		InputStream in = null;
+		File fileIns = null;
+		byte b[] = null;
+		try {
+			// file instance needed so we could know the size of the maze we
+			// are going to load
+			fileIns = new File(path);
+			in = new MyDecompressorInputStream(new FileInputStream(fileIns));
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			b = new byte[(int) fileIns.length() + 1];
+			in.read(b);
+		} catch (IOException e) {
+			// if any error occurs
+			e.printStackTrace();
+		}
+		try {
+			in.close();
+		} catch (IOException e) {
+			// if any error occurs
+			e.printStackTrace();
+		}
+
+		Maze3d loadedMaze = new Maze3d(b);
+		setMaze(name, loadedMaze);
+		
 	}
 }

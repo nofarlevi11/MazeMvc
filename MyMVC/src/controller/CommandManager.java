@@ -115,29 +115,7 @@ public class CommandManager {
 		public void doCommand(String[] s) {
 			String name = s[0];
 			String path = s[1];
-			Maze3d maze = model.getMaze(name);
-			OutputStream out = null;
-			try {
-				out = new MyCompressorOutputStream(new FileOutputStream(path));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-
-			try {
-				out.write(maze.toByteArray());
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				out.flush();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			try {
-				out.close();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			model.saveMaze(name, path);
 		}
 	}
 
@@ -147,29 +125,7 @@ public class CommandManager {
 		public void doCommand(String[] s) {
 			String path = s[0];
 			String name = s[1];
-			InputStream in = null;
-			try {
-				in = new MyDecompressorInputStream(new FileInputStream(path));
-			} catch (FileNotFoundException e) {
-				// if any error occurs
-				e.printStackTrace();
-			}
-			byte b[] = new byte[50 * 50 * 50];
-			try {
-				in.read(b);
-			} catch (IOException e) {
-				// if any error occurs
-				e.printStackTrace();
-			}
-			try {
-				in.close();
-			} catch (IOException e) {
-				// if any error occurs
-				e.printStackTrace();
-			}
-
-			Maze3d loadedMaze = new Maze3d(b);
-			// model.setMaze(name, loadedMaze);
+			model.loadMaze(path, name);
 		};
 	}
 
@@ -191,7 +147,7 @@ public class CommandManager {
 			model.solveMaze(name, algorithm);
 		}
 	}
-	
+
 	public class DisplaySolutionCommand implements Command {
 
 		@Override
@@ -200,6 +156,6 @@ public class CommandManager {
 			Solution sol = model.getSolution(name);
 			view.displaySolution(sol);
 		}
-		
+
 	}
 }
