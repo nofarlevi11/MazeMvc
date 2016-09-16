@@ -89,7 +89,6 @@ public interface View {
 	 * Notify program is about to end.
 	 */
 	void notifyProgramIsAboutToEnd();
-
 	/**
 	 * Notify bad input.
 	 */

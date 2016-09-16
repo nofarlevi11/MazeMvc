@@ -17,10 +17,17 @@ import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
 
 
-// TODO: Auto-generated Javadoc
+
 /**
- * The Class MyModel.
+ * <h1> The Class MyModel. </h1>
+ * <p>
+ * This is a specific class that define the data and methods of our specific model- for a Maze Problem
+ * <p>
+ * 
+ * @author NofarLevi
+ * @since September 2016
  */
+ 
 public class MyModel extends CommonModel {
 
 	
@@ -36,7 +43,7 @@ public class MyModel extends CommonModel {
 	 */
 	class GenerateMazeRunnable implements Runnable {
 
-		/** The cols. */
+		/** The dimension of the maze. */
 		private int floors, rows, cols;
 		
 		/** The name. */
@@ -52,7 +59,7 @@ public class MyModel extends CommonModel {
 		 * @param name the name
 		 * @param floors the floors
 		 * @param rows the rows
-		 * @param cols the cols
+		 * @param cols the columns
 		 */
 		public GenerateMazeRunnable(String name, int floors, int rows, int cols) {
 			this.name = name;
@@ -61,9 +68,7 @@ public class MyModel extends CommonModel {
 			this.cols = cols;
 		}
 
-		/* (non-Javadoc)
-		 * @see java.lang.Runnable#run()
-		 */
+
 		@Override
 		public void run() {
 			GrowingTreeGenerator generator = new GrowingTreeGenerator();
@@ -96,14 +101,14 @@ public class MyModel extends CommonModel {
 		 * Instantiates a new maze solver runnable.
 		 *
 		 * @param name the name
-		 * @param algo the algo
+		 * @param algo the algorithm
 		 */
 		public MazeSolverRunnable(String name,Seracher<Position> algo) {
 			this.name = name;
 			this.algorithm = algo;
 		}
 		
-		/* (non-Javadoc)
+		/* 
 		 * @see java.lang.Runnable#run()
 		 */
 		@Override
@@ -123,7 +128,7 @@ public class MyModel extends CommonModel {
 		}
 	}
 
-	/* (non-Javadoc)
+	/* 
 	 * @see model.Model#generateMaze(java.lang.String, int, int, int)
 	 */
 	@Override
@@ -136,7 +141,7 @@ public class MyModel extends CommonModel {
 
 
 
-	/* (non-Javadoc)
+	/* 
 	 * @see model.Model#setMaze(java.lang.String, algorithms.mazeGenerators.Maze3d)
 	 */
 	@Override
@@ -145,7 +150,7 @@ public class MyModel extends CommonModel {
 			mazes.put(name, maze);
 	}
 
-	/* (non-Javadoc)
+	/* 
 	 * @see model.Model#solveMaze(java.lang.String, algorithms.search.Seracher)
 	 */
 	@Override
@@ -156,14 +161,14 @@ public class MyModel extends CommonModel {
 		threadPool.submit(thread);
 	}
 	
-	/* (non-Javadoc)
+	/* 
 	 * @see model.Model#getSolution(java.lang.String)
 	 */
 	public Solution<Position> getSolution (String name) {
 		return solutions.get(name);
 	}
 
-	/* (non-Javadoc)
+	/* 
 	 * @see model.Model#saveMaze(java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -194,7 +199,7 @@ public class MyModel extends CommonModel {
 		}
 	}
 
-	/* (non-Javadoc)
+	/* 
 	 * @see model.Model#loadMaze(java.lang.String, java.lang.String)
 	 */
 	@Override
@@ -235,7 +240,7 @@ public class MyModel extends CommonModel {
 		controller.notifyMazeIsReady(name);
 	}
 	
-	/* (non-Javadoc)
+	/* 
 	 * @see model.Model#exit()
 	 */
 	public void exit() {

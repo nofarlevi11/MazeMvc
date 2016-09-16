@@ -5,8 +5,16 @@ import view.View;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class MyController.
+
+ * <h1> The Class MyController. </h1>
+ * <p>
+ * This is a specific class that define the data and methods of our specific controller- for a Maze Problem
+ * <p>
+ * 
+ * @author NofarLevi
+ * @since September 2016
  */
+
 public class MyController extends CommonController {
 
 	/**
@@ -19,7 +27,7 @@ public class MyController extends CommonController {
 		super(view, model);
 	}
 
-	/* (non-Javadoc)
+	/* 
 	 * @see controller.CommonController#notifyMazeIsReady(java.lang.String)
 	 */
 	@Override
@@ -27,7 +35,7 @@ public class MyController extends CommonController {
 		view.notifyMazeIsReady(name);
 	}
 
-	/* (non-Javadoc)
+	/*
 	 * @see controller.Controller#notifyMazeWasSolved(java.lang.String)
 	 */
 	@Override

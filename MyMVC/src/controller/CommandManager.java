@@ -14,7 +14,14 @@ import view.View;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class CommandManager.
+
+ * <h1> The Class CommandManager. </h1>
+ * <p>
+ * This is a class that will manage all of the commands of the program <p>
+ * it defines class of a command, and defines the DoCommand Override method for each command 
+ *  <p>
+ * @author NofarLevi
+ * @since September 2016
  */
 public class CommandManager {
 
@@ -143,7 +150,6 @@ public class CommandManager {
 	public class DisplayCrossSectionCommand implements Command {
 
 		/*
-		 * (non-Javadoc)
 		 * 
 		 * @see controller.Command#doCommand(java.lang.String[])
 		 */
@@ -180,7 +186,6 @@ public class CommandManager {
 	public class SaveMazeCommand implements Command {
 
 		/*
-		 * (non-Javadoc)
 		 * 
 		 * @see controller.Command#doCommand(java.lang.String[])
 		 */
@@ -202,7 +207,6 @@ public class CommandManager {
 	public class LoadMazeCommand implements Command {
 
 		/*
-		 * (non-Javadoc)
 		 * 
 		 * @see controller.Command#doCommand(java.lang.String[])
 		 */

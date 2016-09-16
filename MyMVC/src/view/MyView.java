@@ -12,25 +12,28 @@ import controller.Controller;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class MyView.
+ * <h1> The Class MyView. </h1>
+ * <p>
+ * This is a specific class that define the data and methods of our specific view- for a Maze Problem
+ * <p>
+ * 
+ * @author NofarLevi
+ * @since September 2016
  */
+ 
 public class MyView extends CommonView {
 
 	/**
 	 * Instantiates a new my view.
 	 *
 	 * @param in
-	 *            the in
 	 * @param out
-	 *            the out
 	 */
 	public MyView(BufferedReader in, PrintWriter out) {
 		super(in, out);
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see view.CommonView#setController(controller.Controller)
 	 */
 	public void setController(Controller controller) {
@@ -38,8 +41,6 @@ public class MyView extends CommonView {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see view.CommonView#notifyMazeIsReady(java.lang.String)
 	 */
 	@Override
@@ -49,8 +50,6 @@ public class MyView extends CommonView {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see view.CommonView#displayMaze(algorithms.mazeGenerators.Maze3d)
 	 */
 	@Override
@@ -60,8 +59,6 @@ public class MyView extends CommonView {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see view.CommonView#setCommands(java.util.HashMap)
 	 */
 	@Override
@@ -70,8 +67,6 @@ public class MyView extends CommonView {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see view.CommonView#printAnswers(java.lang.String[])
 	 */
 	@Override
@@ -83,19 +78,16 @@ public class MyView extends CommonView {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see view.CommonView#start()
+	/**
+	 * <h1> Start <h1/>
+	 * The Start Method - starting the program by the CLI class
 	 */
 	@Override
 	public void start() {
 		cli.start();
-
 	}
 
 	/*
-	 * (non-Javadoc)
 	 * 
 	 * @see view.CommonView#printCrossSection(int[][])
 	 */
@@ -111,8 +103,6 @@ public class MyView extends CommonView {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see view.View#notifyMazeWasSolved(java.lang.String)
 	 */
 	@Override
@@ -123,8 +113,6 @@ public class MyView extends CommonView {
 	}
 
 	/*
-	 * (non-Javadoc)
-	 * 
 	 * @see view.View#displaySolution(algorithms.search.Solution)
 	 */
 	public void displaySolution(Solution<Position> sol) {
@@ -135,12 +123,18 @@ public class MyView extends CommonView {
 		out.flush();
 	}
 
+	/* 
+	 * @see view.View#notifyProgramIsAboutToEnd()
+	 */
 	@Override
 	public void notifyProgramIsAboutToEnd() {
 		out.println("Bye Bye :) ");
 		out.flush();
 	}
 
+	/* 
+	 * @see view.View#notifyBadInput()
+	 */
 	@Override
 	public void notifyBadInput() {
 		out.println("OOPS, Your input has not the right num of parameters. please try again. for help, press help\n\n");

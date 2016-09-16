@@ -32,7 +32,7 @@ public abstract class CommonController implements Controller {
 		view.setCommands(commandManager.getCommandsMap());
 	}
 	
-	/* (non-Javadoc)
+	/* 
 	 * @see controller.Controller#notifyMazeIsReady(java.lang.String)
 	 */
 	@Override
