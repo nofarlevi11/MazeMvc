@@ -9,32 +9,57 @@ import java.util.List;
 
 import controller.Command;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class CLI.
+ */
 public class CLI {
 
+	/** The in. */
 	private BufferedReader in;
+	
+	/** The out. */
 	private PrintWriter out;
 
+	/** The commands. */
 	private HashMap<String, Command> commands;
 
+	/**
+	 * Instantiates a new cli.
+	 *
+	 * @param in the in
+	 * @param out the out
+	 */
 	public CLI(BufferedReader in, PrintWriter out) {
 		this.in = in;
 		this.out = out;
 	}
 
+	/**
+	 * Sets the command.
+	 *
+	 * @param commands the commands
+	 */
 	public void setCommand(HashMap<String, Command> commands) {
 		this.commands = commands;
 	}
 
+	/**
+	 * Prints the menu.
+	 */
 	private void printMenu() {
 		out.println("what do you want to do? Please enter a command from the list below:");
-		out.println("#################");
+		out.println("### For Help, press 'help' ###\n");
 		for (String command : commands.keySet()) {
 			out.println("* " + command);
 		}
-		out.println("* help");
+		out.println("* help\n");
 		out.flush();
 	}
 
+	/**
+	 * Start.
+	 */
 	public void start() {
 		Thread thread = new Thread(new Runnable() {
 
@@ -57,8 +82,6 @@ public class CLI {
 							} else if (comArray.length > 1) {
 								String commandArgs = commandLine.substring(commandLine.indexOf(" ") + 1);
 								args = commandArgs.split(" ");
-							} else if (command.equals("exit")) {
-								break;
 							}
 							if (!command.equals("help")){
 								Command cmd = commands.get(command);
@@ -75,6 +98,9 @@ public class CLI {
 		thread.start();
 	}
 
+	/**
+	 * Prints the help.
+	 */
 	private void printHelp() {
 		out.println("Welcome to the Maze console!");
 		out.println("this is your place to Generate Mazes, Solve them, Save to a file, and more.. \n"
@@ -96,7 +122,8 @@ public class CLI {
 				+ "\t Enter the name of the command, and provide: 1) the name of the file, 2) the name you choose for the maze\n"
 				+ "*  dir : this command will display a list of files and folders, which are in a path you provide \n"
 				+ "\t Enter the name of the command, and provide: the path \n"
-				+ "*  exit : this command will exit the program properly \n\n");
+				+ "*  exit : this command will exit the program properly \n\n"
+				+ "\t\t FOR EXAMPLE:   generate_maze Nofar 5 5 5\n\n");
 	}
 
 }
