@@ -27,12 +27,19 @@ public class MyDecompressorInputStream extends InputStream{
 	@Override
 	public int read(byte[] arr) throws IOException {
 		int i = 0;
-		while (i< arr.length){
+		int fileSize = in.available();
+		
+		for (int k = 0 ; i<fileSize; i+=2) {
+			if (arr.length <= i)
+				break;
 			byte count = (byte) in.read();
 			byte b = (byte) in.read();
 			
 			for (int j = 0 ; j < count ; j++) {
-				arr[i++] = b;
+				if(arr.length <= i){
+					break;
+				}
+				arr[k++] = b;
 			}
 		}
 		return arr.length;

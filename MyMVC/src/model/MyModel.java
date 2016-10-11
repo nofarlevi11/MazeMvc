@@ -218,7 +218,8 @@ public class MyModel extends CommonModel {
 			e.printStackTrace();
 		}
 		try {
-			b = new byte[(int) fileIns.length() + 1];
+			double sizeByteArray = fileIns.length();
+			b = new byte[(int) sizeByteArray];
 			in.read(b);
 		} catch (IOException e) {
 			// if any error occurs
